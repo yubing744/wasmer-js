@@ -97,10 +97,11 @@ impl WASI {
             .args(if args.len() > 0 { &args[1..] } else { &[] })
             .envs(env)
             .set_fs(Box::new(fs))
-            .map_dirs(preopens)
-            .map_err(|e| js_sys::Error::new(&format!("Couldn't preopen the dir: {}`", e)))?
-            // .map_dirs(vec![(".".to_string(), "/".to_string())])
-            // .preopen_dir("/").map_err(|e| js_sys::Error::new(&format!("Couldn't preopen the dir: {}`", e)))?
+            //.map_dirs(preopens)
+            //.map_dirs(vec![(".".to_string(), "/".to_string())])
+            //.map_err(|e| js_sys::Error::new(&format!("Couldn't preopen the dir: {}`", e)))?
+            
+            .preopen_dir("/tmp").map_err(|e| js_sys::Error::new(&format!("Couldn't preopen the dir: {}`", e)))?
             .finalize()
             .map_err(|e| js_sys::Error::new(&format!("Failed to create the WasiState: {}`", e)))?;
 
